@@ -1,0 +1,158 @@
+Dictionnaire de données 
+
+Nom : email
+Code : EMAIL
+Type : VARCHAR
+Taille : 180,
+Commentaire : Login + contact email.
+
+Nom : password
+Code : PASSWORD
+Type : VARCHAR
+Taille : 255,
+Commentaire : Password hash (BCrypt/Argon2).
+
+Nom : firstname
+Code : FIRSTNAME
+Type : VARCHAR
+Taille : 100,
+Commentaire : First name.
+
+Nom : lastname
+Code : LASTNAME
+Type : VARCHAR
+Taille : 100,
+Commentaire : Last name.
+
+Nom : address
+Code : ADDRESS
+Type : VARCHAR
+Taille : 255,
+Commentaire : Street address.
+
+Nom : postalCode
+Code : POSTALCODE
+Type : VARCHAR
+Taille : 10,
+Commentaire : Postal/ZIP.
+
+Nom : city
+Code : CITY
+Type : VARCHAR
+Taille : 100,
+Commentaire : 
+
+Nom : phone
+Code : PHONE
+Type : VARCHAR
+Taille : 20,
+Commentaire : Phone number.
+
+Nom : role
+Code : ROLE
+Type : VARCHAR
+Taille : 20,
+Commentaire : ‘ADMIN’ or ‘CUSTOMER’ (validated at app level).
+
+Nom : createdAt
+Code : CREATEDAT
+Type : DATETIME
+Taille : ,
+Commentaire : Account creation date.
+
+Nom : lastLoginAt
+Code : LASTLOGINAT
+Type : DATETIME
+Taille : ,
+Commentaire : Last successful login timestamp.
+
+Nom : number
+Code : NUMBER
+Type : VARCHAR
+Taille : 50,
+Commentaire : Human-readable order number (e.g., ORD-2025-000123).
+
+Nom : status
+Code : STATUS
+Type : VARCHAR
+Taille : 20,
+Commentaire : ‘PENDING’, ‘PAID’, ‘CANCELLED’ (validated in app).
+
+Nom : totalCents
+Code : TOTALCENTS
+Type : INT
+Taille : ,
+Commentaire : Order grand total in cents.
+
+Nom : name
+Code : NAME
+Type : VARCHAR
+Taille : 255,
+Commentaire : Pizza name (unique per catalog; recommend unique index).
+
+Nom : description
+Code : DESCRIPTION
+Type : TEXT
+Taille : ,
+Commentaire : Marketing/recipe text.
+
+Nom : photo
+Code : PHOTO
+Type : VARCHAR
+Taille : 255,
+Commentaire : Image path/URL.
+
+Nom : basePriceCents
+Code : BASEPRICECENTS
+Type : INT
+Taille : ,
+Commentaire : Base price (Large size).
+
+Nom : isActive
+Code : ISACTIVE
+Type : TINYINT
+Taille : ,
+Commentaire : Visible for sale if 1.
+
+Nom : label
+Code : LABEL
+Type : VARCHAR
+Taille : 10,
+Commentaire : Expected: ‘M’, ‘L’, ‘XL’.
+
+Nom : diameterCm
+Code : DIAMETERCM
+Type : DECIMAL
+Taille : 4,1
+Commentaire : Typical: 28.0 / 33.0 / 40.0.
+
+Nom : unit
+Code : UNIT
+Type : VARCHAR
+Taille : 10,
+Commentaire : ‘GRAM’, ‘ML’, or ‘PIECE’ (validated in app).
+
+Nom : costPerUnitCents
+Code : COSTPERUNITCENTS
+Type : INT
+Taille : ,
+Commentaire : Procurement cost per unit (optional).
+
+Nom : isVegetarian
+Code : ISVEGETARIAN
+Type : TINYINT
+Taille : 1,
+Commentaire : Vegetarian flag.
+
+Nom : isVegan
+Code : ISVEGAN
+Type : TINYINT
+Taille : 1,
+Commentaire : Vegan flag.
+
+Nom : hasAllergens
+Code : HASALLERGENS
+Type : TINYINT
+Taille : 1,
+Commentaire : Contains allergens flag.
+
