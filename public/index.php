@@ -14,9 +14,7 @@ if (APP_DEBUG) {
     ini_set('display_errors', '0');
 }
 
-// TODO: activer le routeur quand prêt
-// use App\Core\Router;
-// $router = new Router(require dirname(__DIR__).'/config/routes.php');
-// $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
+use App\Core\Router;
 
-echo '<h1>Pizza-App</h1><p>Router not installed yet. It works 🎉</p>';
+$router = new Router(require dirname(__DIR__).'/config/routes.php');
+$router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
