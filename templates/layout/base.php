@@ -1,3 +1,8 @@
+<?php
+$currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$isHome = ($currentPath === '/');
+$bodyClass = ($isHome ? 'is-home' : 'is-page');
+?>
 <!doctype html>
 <html lang="fr">
 
@@ -33,7 +38,7 @@
 
   <?php require __DIR__ . '/../partials/_footer.php'; ?>
 
-    <!-- Scroll Top -->
+  <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
 
@@ -45,6 +50,24 @@
   <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+
+  <!-- Header scroll behavior -->
+  <script>
+    (function() {
+      var last = -1;
+
+      function onScroll() {
+        var y = window.scrollY || window.pageYOffset || 0;
+        if (y === last) return;
+        last = y;
+        document.body.classList.toggle('scrolled', y > 10);
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, {
+        passive: true
+      });
+    })();
+  </script>
 
   <!-- Main JS File -->
   <script src="/assets/js/main.js"></script>

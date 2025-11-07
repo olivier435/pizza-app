@@ -128,7 +128,7 @@ h6 {
     border: 3px solid var(--accent-color);
     border-top-color: var(--surface-color);
     -webkit-animation: php-email-form-loading 1s linear infinite;
-            animation: php-email-form-loading 1s linear infinite;
+    animation: php-email-form-loading 1s linear infinite;
 }
 
 @-webkit-keyframes php-email-form-loading {
@@ -161,6 +161,22 @@ h6 {
     transition: all 0.5s;
     z-index: 997;
     background-color: var(--background-color);
+}
+
+.is-home:not(.scrolled) .header,
+.is-home:not(.scrolled) .header .topbar {
+    --background-color: rgba(0, 0, 0, 0);
+}
+
+.scrolled .header {
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Si tu veux cacher la topbar uniquement quand scrolled */
+.scrolled .header .topbar {
+    height: 0;
+    visibility: hidden;
+    overflow: hidden;
 }
 
 .header .topbar {
@@ -812,6 +828,30 @@ textarea:focus {
     border-color: var(--accent-color);
 }
 
+input[type=text]::-webkit-input-placeholder,
+input[type=email]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-moz-placeholder,
+input[type=email]::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]:-ms-input-placeholder,
+input[type=email]:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-ms-input-placeholder,
+input[type=email]::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
 input[type=text]::-webkit-input-placeholder, input[type=email]::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
@@ -857,7 +897,7 @@ textarea::placeholder {
     width: 60px;
     height: 60px;
     -webkit-animation: animate-preloader 1.5s linear infinite;
-            animation: animate-preloader 1.5s linear infinite;
+    animation: animate-preloader 1.5s linear infinite;
 }
 
 @-webkit-keyframes animate-preloader {
@@ -1076,7 +1116,7 @@ section,
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
 }
 
 .hero .hero-background .overlay {
@@ -1224,7 +1264,7 @@ section,
     border-radius: 15px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 @media (max-width: 992px) {
@@ -1257,6 +1297,26 @@ section,
 .hero .booking-card select:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.hero .booking-card .form-control::-webkit-input-placeholder,
+.hero .booking-card select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-moz-placeholder,
+.hero .booking-card select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control:-ms-input-placeholder,
+.hero .booking-card select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-ms-input-placeholder,
+.hero .booking-card select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 .hero .booking-card .form-control::-webkit-input-placeholder, .hero .booking-card select::-webkit-input-placeholder {
@@ -1326,7 +1386,7 @@ section,
 
 .hero .scroll-indicator .scroll-arrow {
     -webkit-animation: bounce 2s infinite;
-            animation: bounce 2s infinite;
+    animation: bounce 2s infinite;
 }
 
 .hero .scroll-indicator .scroll-arrow i {
@@ -1574,10 +1634,10 @@ section,
 }
 
 .menu .menu-grid .menu-card.featured:before {
-    content: "Featured";
+    content: "Recommandé";
     position: absolute;
-    top: 15px;
-    right: -30px;
+    top: 20px;
+    right: -45px;
     background-color: var(--accent-color);
     color: var(--contrast-color);
     padding: 5px 40px;
@@ -1597,7 +1657,7 @@ section,
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.5s ease;
 }
 
@@ -1622,7 +1682,7 @@ section,
     text-transform: uppercase;
     letter-spacing: 0.5px;
     -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -1822,7 +1882,7 @@ section,
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.5s ease;
 }
 
@@ -1988,6 +2048,105 @@ section,
     }
 }
 
+/* La colonne Isotope/Bootstrap doit étirer la card */
+.menu .menu-grid .isotope-item {
+    display: flex;
+}
+
+.menu .menu-grid .isotope-item>.menu-card {
+    flex: 1 1 auto;
+}
+
+/* La card devient un conteneur flex vertical */
+.menu .menu-grid .menu-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Image avec ratio constant pour uniformiser la partie haute
+   -> remplace la règle height: 250px par aspect-ratio */
+.menu .menu-grid .menu-card .menu-card-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    /* 16/9 si tu préfères */
+    height: auto;
+    /* <-- important : on laisse le ratio gérer la hauteur */
+}
+
+.menu .menu-grid .menu-card .menu-card-image img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+}
+
+/* Contenu flexible : occupe le reste et cale le bas */
+.menu .menu-grid .menu-card .menu-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    padding: 24px;
+    /* garde ta valeur existante */
+    flex: 1 1 auto;
+}
+
+/* Titre clampé à 2 lignes et hauteur réservée pour éviter les sauts */
+.menu .menu-grid .menu-card .menu-card-content h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--heading-color);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    line-height: 1.25;
+    /* cohérent avec 1.25rem */
+    min-height: calc(1.25rem * 1.25 * 2);
+    /* réserve 2 lignes */
+}
+
+/* Description clampée à 3 lignes et hauteur réservée */
+.menu .menu-grid .menu-card .menu-card-content p {
+    color: color-mix(in srgb, var(--default-color), transparent 25%);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    min-height: calc(0.9rem * 1.6 * 3);
+    /* réserve 3 lignes */
+}
+
+/* Optionnel : léger ajustement sur mobile */
+@media (max-width: 576px) {
+    .menu .menu-grid .menu-card .menu-card-image {
+        aspect-ratio: 16 / 10;
+    }
+}
+
+/* Badges type (icône + fond translucide) */
+.menu .menu-grid .menu-card .menu-card-image .dietary-badges .badge-special {
+    background-color: color-mix(in srgb, #ff5722, transparent 20%);
+    color: var(--contrast-color);
+}
+
+.menu .menu-grid .menu-card .menu-card-image .dietary-badges .badge-classic {
+    background-color: color-mix(in srgb, #ffc107, transparent 20%);
+    color: #111;
+}
+
+/* Tu as déjà .badge-vegetarian et .badge-chef */
+
+
 /*--------------------------------------------------------------
 # Testimonials Section
 --------------------------------------------------------------*/
@@ -2025,7 +2184,7 @@ section,
     height: 48px;
     border-radius: 50%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
 }
 
 .testimonials .testimonial-item .profile .info h4 {
@@ -2099,7 +2258,7 @@ section,
     width: 100%;
     height: auto;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transform: scale(1.02);
     transition: transform 0.3s ease;
 }
@@ -2173,7 +2332,7 @@ section,
     max-width: 150px;
     opacity: 0.85;
     -webkit-filter: drop-shadow(0 2px 6px var(--shadow-color));
-            filter: drop-shadow(0 2px 6px var(--shadow-color));
+    filter: drop-shadow(0 2px 6px var(--shadow-color));
 }
 
 .chefs .team-grid .chef-card {
@@ -2201,7 +2360,7 @@ section,
     width: 100%;
     height: auto;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transform: scale(1.01);
     transition: transform 0.3s ease;
 }
@@ -2346,6 +2505,26 @@ section,
     background-color: var(--background-color);
 }
 
+.book-a-table .reservation-form-section .form-control::-webkit-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-moz-placeholder,
+.book-a-table .reservation-form-section .form-select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control:-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
 .book-a-table .reservation-form-section .form-control::-webkit-input-placeholder, .book-a-table .reservation-form-section .form-select::-webkit-input-placeholder {
     color: color-mix(in srgb, var(--default-color), transparent 55%);
 }
@@ -2401,7 +2580,7 @@ section,
     width: 100%;
     height: 250px;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.5s ease;
 }
 
@@ -2800,7 +2979,7 @@ section,
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.6s ease;
 }
 
@@ -3142,7 +3321,7 @@ section,
     height: auto;
     border-radius: 16px 16px 0 0;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     transition: transform 0.3s, -webkit-filter 0.3s;
     transition: transform 0.3s, filter 0.3s;
     transition: transform 0.3s, filter 0.3s, -webkit-filter 0.3s;
@@ -3152,7 +3331,7 @@ section,
 .gallery .gallery-card a:focus img {
     transform: scale(1.07);
     -webkit-filter: brightness(0.92) saturate(1.2);
-            filter: brightness(0.92) saturate(1.2);
+    filter: brightness(0.92) saturate(1.2);
 }
 
 .gallery .gallery-card .caption {

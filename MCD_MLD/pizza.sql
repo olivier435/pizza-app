@@ -40,12 +40,17 @@ CREATE TABLE `user` (
 CREATE TABLE `pizza` (
   `id`              INT AUTO_INCREMENT NOT NULL,
   `name`            VARCHAR(255) NOT NULL COMMENT 'Pizza name (unique per catalog).',
+  `slug`            VARCHAR(180) NOT NULL,
   `description`     TEXT NULL COMMENT 'Marketing/recipe text.',
   `photo`           VARCHAR(255) NULL COMMENT 'Image path/URL.',
   `basePriceCents`  INT UNSIGNED NOT NULL COMMENT 'Base price (Large size).',
+  `isRecommended`   TINYINT(1) NOT NULL DEFAULT 0,
+  `filter`          VARCHAR(30) NOT NULL DEFAULT 'filter-classic',
   `isActive`        TINYINT(1) NOT NULL DEFAULT 1 COMMENT 'Visible for sale if 1.',
   CONSTRAINT `pizza_PK` PRIMARY KEY (`id`),
-  CONSTRAINT `pizza_name_UQ` UNIQUE (`name`)
+  CONSTRAINT `pizza_name_UQ` UNIQUE (`name`),
+  CONSTRAINT `pizza_slug_UQ` UNIQUE (`slug`),
+  KEY `pizza_filter_IDX` (`filter`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ------------------------------------------------------------
@@ -55,7 +60,6 @@ CREATE TABLE `ingredient` (
   `id`               INT AUTO_INCREMENT NOT NULL,
   `name`             VARCHAR(100) NOT NULL COMMENT 'Ingredient name (unique).',
   `unit`             VARCHAR(10)  NOT NULL COMMENT 'GRAM | ML | PIECE (validated in app).',
-  `photo`            VARCHAR(255) NULL COMMENT 'Image path/URL.',
   `costPerUnitCents` INT UNSIGNED NULL COMMENT 'Procurement cost per unit (optional).',
   `isVegetarian`     TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Vegetarian flag.',
   `isVegan`          TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'Vegan flag.',
@@ -144,3 +148,5 @@ CREATE TABLE `pizza_ingredient` (
 -- ------------------------------------------------------------
 INSERT INTO `size` (`label`, `diameterCm`) VALUES
 ('M', 28.0), ('L', 33.0), ('XL', 40.0);
+
+ALTER TABLE ingredient ADD COLUMN extraPriceCents INT UNSIGNED NULL COMMENT 'Extra price for addition on pizza';
