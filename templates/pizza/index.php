@@ -60,6 +60,12 @@
                                         src="<?= htmlspecialchars($pizza->getPhotoUrl() ?? '/assets/img/restaurant/default.webp') ?>"
                                         alt="<?= htmlspecialchars($pizza->getName()) ?>"
                                         class="img-fluid">
+                                    <!-- bouton plein cadre -->
+                                    <button class="stretched-link btn btn-link p-0 border-0 open-pizza-modal"
+                                        data-pizza-id="<?= (int)$pizza->getId() ?>"
+                                        data-pizza-name="<?= htmlspecialchars($pizza->getName(), ENT_QUOTES) ?>"
+                                        aria-label="Configurer la pizza <?= htmlspecialchars($pizza->getName()) ?>">
+                                    </button>
                                     <div class="dietary-badges">
                                         <?php if ($pizza->getFilter() === 'filter-vegetarian'): ?>
                                             <span class="badge-vegetarian" title="Végétarienne"><i class="bi bi-leaf"></i></span>
@@ -86,3 +92,68 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal Bootstrap -->
+    <div class="modal fade" id="pizzaModal" tabindex="-1" aria-labelledby="pizzaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <form id="pizzaModalForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="pizzaModalLabel">Configurer votre pizza</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row g-4">
+                            <div class="col-md-5">
+                                <img id="pm-photo" src="" alt="" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-7">
+                                <h4 id="pm-name" class="mb-1"></h4>
+                                <p id="pm-desc" class="text-muted small"></p>
+
+                                <input type="hidden" name="pizzaId" id="pm-id" value="">
+
+                                <!-- Taille -->
+                                <div class="mb-3">
+                                    <label class="form-label">Taille</label>
+                                    <div id="pm-sizes" class="d-flex gap-2">
+                                        <!-- radios injectées via JS -->
+                                    </div>
+                                </div>
+
+                                <!-- Quantité -->
+                                <div class="mb-3">
+                                    <label for="pm-qty" class="form-label">Quantité</label>
+                                    <div class="input-group" style="max-width:180px;">
+                                        <button class="btn btn-outline-secondary" type="button" id="pm-qty-minus">−</button>
+                                        <input type="text" class="form-control text-center" name="qty" id="pm-qty" value="1" min="1">
+                                        <button class="btn btn-outline-secondary" type="button" id="pm-qty-plus">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="pm-extras" class="form-label">Ingrédients additionnels</label>
+                                    <select id="pm-extras" name="extras[]" class="form-select" multiple size="6">
+                                        <!-- options injectées via JS -->
+                                    </select>
+                                    <div class="form-text">Maintenez <kbd>Ctrl</kbd> ou <kbd>Cmd</kbd> pour une sélection multiple.</div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="fs-5">
+                                        Total : <strong id="pm-total">0,00 €</strong>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="bi bi-cart-plus"></i> Ajouter au panier
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>

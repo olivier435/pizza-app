@@ -71,6 +71,8 @@ $bodyClass = ($isHome ? 'is-home' : 'is-page');
 
   <!-- Main JS File -->
   <script src="/assets/js/main.js"></script>
+  <!-- Pizza modal / cart JS -->
+  <script src="/assets/js/pizza.js"></script>
 </body>
 
 </html>
