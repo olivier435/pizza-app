@@ -88,6 +88,10 @@ h6 {
     font-family: var(--heading-font);
 }
 
+.alert {
+  transition: opacity 0.6s ease;
+}
+
 /* PHP Email Form Messages
 ------------------------------*/
 .php-email-form .error-message {

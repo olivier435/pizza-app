@@ -5,16 +5,62 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use PDO;
+use App\Entity\User;
 
 final class UserRepository extends Repository
 {
-    public function findByEmail(string $email): ?array
+    private function hydrate(array $row): User
+    {
+        $u = (new User())
+            ->setId((int)$row['id'])
+            ->setEmail((string)$row['email'])
+            ->setPasswordHash((string)$row['passwordHash'])
+            ->setFirstname((string)$row['firstname'])
+            ->setLastname((string)$row['lastname'])
+            ->setAddress($row['address'] ?? null)
+            ->setPostalCode($row['postalCode'] ?? null)
+            ->setCity($row['city'] ?? null)
+            ->setPhone($row['phone'] ?? null)
+            ->setRole((string)$row['role']);
+
+        if (!empty($row['createdAt'])) {
+            $u->setCreatedAt(new \DateTimeImmutable((string)$row['createdAt']));
+        }
+        if (!empty($row['lastLoginAt'])) {
+            $u->setLastLoginAt(new \DateTimeImmutable((string)$row['lastLoginAt']));
+        }
+        return $u;
+    }
+
+    public function findByEmail(string $email): ?User
     {
         $sql = "SELECT * FROM user WHERE email = :email LIMIT 1";
         $req = $this->pdo->prepare($sql);
-        $req->execute([':email' => $email]);
+        $req->execute([':email' => strtolower(trim($email))]);
         $row = $req->fetch(PDO::FETCH_ASSOC);
-        return $row ?: null;
+        return $row ? $this->hydrate($row) : null;
+    }
+
+    public function createFromEntity(User $user): ?int
+    {
+        $sql = "INSERT INTO user
+                    (email,passwordHash,firstname,lastname,address,postalCode,city,phone,role,createdAt)
+                VALUES
+                    (:email,:passwordHash,:firstname,:lastname,:address,:postalCode,:city,:phone,:role,NOW())";
+        $req = $this->pdo->prepare($sql);
+        $regist = $req->execute([
+            ':email'        => $user->getEmail(),
+            ':passwordHash' => $user->getPasswordHash(),
+            ':firstname'    => $user->getFirstname(),
+            ':lastname'     => $user->getLastname(),
+            ':address'      => $user->getAddress(),
+            ':postalCode'   => $user->getPostalCode(),
+            ':city'         => $user->getCity(),
+            ':phone'        => $user->getPhone(),
+            ':role'         => $user->getRole(),
+        ]);
+        if (!$regist) return null;
+        return (int)$this->pdo->lastInsertId();
     }
 
     public function createUser(array $data): ?int
@@ -53,6 +99,6 @@ final class UserRepository extends Repository
     public function deleteByEmail(string $email): bool
     {
         $req = $this->pdo->prepare("DELETE FROM user WHERE email = :email");
-        return $req->execute([':email' => $email]);
+        return $req->execute([':email' => strtolower(trim($email))]);
     }
 }

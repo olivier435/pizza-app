@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Core\Controller;
 use App\Repository\UserRepository;
 
@@ -16,7 +17,9 @@ final class AuthController extends Controller
             $this->redirect('/checkout');
             return;
         }
-        $this->render('auth/login', ['lastEmail' => $_SESSION['_last_email'] ?? '']);
+        $this->render('auth/login', [
+            'lastEmail' => $_SESSION['_last_email'] ?? '',
+        ]);
     }
 
     public function loginPost(): void
@@ -27,7 +30,7 @@ final class AuthController extends Controller
 
         $_SESSION['_last_email'] = $email;
 
-        if ($email === '' || $pass === '') {
+        if ($email === '' || $pass === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Identifiants invalides.'];
             $this->redirect('/login');
             return;
@@ -35,24 +38,15 @@ final class AuthController extends Controller
 
         $repo = new UserRepository();
         $user = $repo->findByEmail($email);
-
-        if (!$user || !password_verify($pass, $user['passwordHash'])) {
+        if (!$user || !password_verify($pass, $user->getPasswordHash())) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Email ou mot de passe incorrect.'];
             $this->redirect('/login');
             return;
         }
 
         // si connexion ok → mise en session
-        $_SESSION['user'] = [
-            'id'        => (int)$user['id'],
-            'email'     => $user['email'],
-            'firstname' => $user['firstname'],
-            'lastname'  => $user['lastname'],
-            'role'      => $user['role'] ?: 'USER',
-        ];
-
-        // mise à jour lastLoginAt
-        $repo->touchLastLogin((int)$user['id']);
+        $_SESSION['user'] = $user->toSessionArray();
+        $repo->touchLastLogin((int)$user->getId());
 
         $target = $_SESSION['_target_path'] ?? '/checkout';
         unset($_SESSION['_target_path']);
@@ -66,7 +60,7 @@ final class AuthController extends Controller
             $this->redirect('/checkout');
             return;
         }
-        $this->render('auth/register', []);
+        $this->render('auth/register');
     }
 
     public function registerPost(): void
@@ -76,60 +70,49 @@ final class AuthController extends Controller
         $email     = trim((string)($_POST['email']     ?? ''));
         $password  = (string)($_POST['password']  ?? '');
         $password2 = (string)($_POST['password2'] ?? '');
-        $firstname = trim((string)($_POST['firstname'] ?? ''));
-        $lastname  = trim((string)($_POST['lastname']  ?? ''));
+        $firstname = (string)($_POST['firstname'] ?? '');
+        $lastname  = (string)($_POST['lastname']  ?? '');
 
+        // Validations de base
         if ($email === '' || $password === '' || $password2 === '' || $firstname === '' || $lastname === '') {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Veuillez remplir tous les champs requis.'];
-            $this->redirect('/register');
-            return;
+            $this->redirect('/register'); return;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Email invalide."];
-            $this->redirect('/register');
-            return;
+            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Email invalide.'];
+            $this->redirect('/register'); return;
         }
         if ($password !== $password2) {
-            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Les mots de passe ne correspondent pas."];
-            $this->redirect('/register');
-            return;
+            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Les mots de passe ne correspondent pas.'];
+            $this->redirect('/register'); return;
         }
         if (strlen($password) < 8) {
-            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Mot de passe trop court (8 caractères minimum)."];
-            $this->redirect('/register');
-            return;
+            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Mot de passe trop court (8 caractères minimum).'];
+            $this->redirect('/register'); return;
         }
 
         $repo = new UserRepository();
         if ($repo->findByEmail($email)) {
-            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Un compte existe déjà avec cet email."];
-            $this->redirect('/register');
-            return;
+            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Un compte existe déjà avec cet email.'];
+            $this->redirect('/register'); return;
         }
 
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $uid  = $repo->createUser([
-            'email'        => $email,
-            'passwordHash' => $hash,
-            'firstname'    => $firstname,
-            'lastname'     => $lastname,
-            'role'         => 'USER',
-        ]);
+        // Construction entité (normalisation prénom/nom dans les setters)
+        $user = (new User())
+            ->setEmail($email)
+            ->setFirstname($firstname)
+            ->setLastname($lastname)
+            ->setRole('USER')
+            ->setPasswordHash(password_hash($password, PASSWORD_DEFAULT));
 
-        if (!$uid) {
+        $id = $repo->createFromEntity($user);
+        if (!$id) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Impossible de créer le compte pour le moment."];
-            $this->redirect('/register');
-            return;
+            $this->redirect('/register'); return;
         }
 
-        // connexion automatique
-        $_SESSION['user'] = [
-            'id'        => (int)$uid,
-            'email'     => $email,
-            'firstname' => $firstname,
-            'lastname'  => $lastname,
-            'role'      => 'USER',
-        ];
+        $user->setId($id);
+        $_SESSION['user'] = $user->toSessionArray();
 
         $target = $_SESSION['_target_path'] ?? '/checkout';
         unset($_SESSION['_target_path']);

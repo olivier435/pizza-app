@@ -15,9 +15,9 @@
             </nav>
         </div>
     </div>
+    <?php include __DIR__ . '/../layout/_flash.php'; ?>
     <section class="section login-register auth">
         <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-            <?php include __DIR__ . '/../layout/_flash.php'; ?>
             <div class="row justify-content-center">
                 <div class="col-lg-5">
                     <div class="login-register-wraper">
