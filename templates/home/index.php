@@ -14,7 +14,7 @@
                     <p class="hero-description">Laissez-vous séduire par une cuisine italienne authentique, préparée avec passion à partir des meilleurs ingrédients. Des recettes traditionnelles transmises de génération en génération aux créations culinaires innovantes, nous vous proposons une expérience gastronomique inoubliable.</p>
                     <div class="hero-actions" data-aos="fade-up" data-aos-delay="200">
                         <a href="#" class="btn btn-primary">Réservez une table</a>
-                        <a href="#" class="btn btn-outline">Voir le menu</a>
+                        <a href="/pizzas" class="btn btn-outline">Voir le menu</a>
                     </div>
                     <div class="hero-features" data-aos="fade-up" data-aos-delay="300">
                         <div class="feature-item">
