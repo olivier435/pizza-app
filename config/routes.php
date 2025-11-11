@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Controller\{HomeController, PizzaController, CartController};
+use App\Controller\Dev\FixturesController;
+use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController};
 
 return [
     ['GET',  '/',            [HomeController::class, 'index']],
@@ -19,4 +20,18 @@ return [
     ['POST', '/cart/update', [CartController::class, 'update']],
     ['POST', '/cart/remove', [CartController::class, 'remove']],
     ['POST', '/cart/edit', [CartController::class, 'edit']],
+
+    // Checkout
+    ['GET',  '/checkout', [CheckoutController::class, 'index']],
+
+    // Auth
+    ['GET',  '/login',    [AuthController::class, 'loginForm']],
+    ['POST', '/login',    [AuthController::class, 'loginPost']],
+    ['GET',  '/register', [AuthController::class, 'registerForm']],
+    ['POST', '/register', [AuthController::class, 'registerPost']],
+    ['GET',  '/logout',   [AuthController::class, 'logout']],
+
+    // Fixtures (dev)
+    ['GET', '/_fixtures/load',  [FixturesController::class, 'load']],
+    ['GET', '/_fixtures/clear', [FixturesController::class, 'clear']],
 ];

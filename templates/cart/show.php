@@ -149,7 +149,7 @@ foreach ($cart ?? [] as $l) {
             <span class="summary-value"><?= $euros($grand) ?></span>
           </div>
           <div class="checkout-button">
-            <a href="#" class="btn btn-accent w-100">
+            <a href="/checkout" class="btn btn-accent w-100">
               Passer au paiement <i class="bi bi-arrow-right"></i>
             </a>
           </div>

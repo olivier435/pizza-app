@@ -976,6 +976,54 @@ textarea::-ms-input-placeholder {
     color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
+input[type=text]::-webkit-input-placeholder,
+input[type=email]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-moz-placeholder,
+input[type=email]::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]:-ms-input-placeholder,
+input[type=email]:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-ms-input-placeholder,
+input[type=email]::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-webkit-input-placeholder,
+input[type=email]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-moz-placeholder,
+input[type=email]::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]:-ms-input-placeholder,
+input[type=email]:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-ms-input-placeholder,
+input[type=email]::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
 input[type=text]::placeholder,
 input[type=email]::placeholder,
 textarea::placeholder {
@@ -1405,6 +1453,46 @@ section,
 .hero .booking-card select:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.hero .booking-card .form-control::-webkit-input-placeholder,
+.hero .booking-card select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-moz-placeholder,
+.hero .booking-card select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control:-ms-input-placeholder,
+.hero .booking-card select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-ms-input-placeholder,
+.hero .booking-card select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-webkit-input-placeholder,
+.hero .booking-card select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-moz-placeholder,
+.hero .booking-card select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control:-ms-input-placeholder,
+.hero .booking-card select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-ms-input-placeholder,
+.hero .booking-card select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 .hero .booking-card .form-control::-webkit-input-placeholder,
@@ -2657,6 +2745,46 @@ section,
     border-color: var(--accent-color);
     box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent-color), transparent 75%);
     background-color: var(--background-color);
+}
+
+.book-a-table .reservation-form-section .form-control::-webkit-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-moz-placeholder,
+.book-a-table .reservation-form-section .form-select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control:-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-webkit-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-moz-placeholder,
+.book-a-table .reservation-form-section .form-select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control:-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
 }
 
 .book-a-table .reservation-form-section .form-control::-webkit-input-placeholder,
@@ -5301,5 +5429,212 @@ section#cart {
     .cart .cart-items,
     .cart .cart-summary {
         padding: 1.5rem;
+    }
+}
+
+/*--------------------------------------------------------------
+# Auth Page login/register Section
+--------------------------------------------------------------*/
+.page-auth {
+    color: var(--default-color);
+    background-color: var(--background-color);
+    padding: 25px 0;
+    position: relative;
+}
+
+.page-auth h1 {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: var(--default-font);
+}
+
+.page-auth .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--default-font);
+}
+
+.page-auth .breadcrumbs ol li+li {
+    padding-left: 10px;
+}
+
+.page-auth .breadcrumbs ol li+li::before {
+    content: "/";
+    display: inline-block;
+    padding-right: 10px;
+    color:
+        color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.auth {
+    padding-bottom: min(65px);
+}
+
+.login-register .login-register-wraper {
+    background-color: var(--surface-color);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.login-register .nav-tabs {
+    border: none;
+    margin-bottom: 2rem;
+    gap: 0.75rem;
+}
+
+.login-register .nav-tabs .nav-item .nav-link {
+    border: none;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-register .nav-tabs .nav-item .nav-link:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+    color: var(--accent-color);
+}
+
+.login-register .nav-tabs .nav-item .nav-link.active {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    transform: translateY(-2px);
+}
+
+.login-register .nav-tabs .nav-item .nav-link i {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+}
+
+.login-register .form-label {
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: color-mix(in srgb, var(--default-color), transparent 20%);
+}
+
+.login-register .form-control {
+    border-radius: 12px;
+    border: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-height: 3.25rem;
+    color: var(--default-color);
+    background-color: color-mix(in srgb, var(--surface-color), transparent 50%);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-register .form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 85%);
+    background-color: var(--surface-color);
+}
+
+.login-register .form-control:hover {
+    border-color: color-mix(in srgb, var(--accent-color), transparent 50%);
+    background-color: var(--surface-color);
+}
+
+.login-register .form-check {
+    margin-bottom: 1rem;
+}
+
+.login-register .form-check .form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid color-mix(in srgb, var(--default-color), transparent 70%);
+    border-radius: 6px;
+    margin-right: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-register .form-check .form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.login-register .form-check .form-check-input:focus {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 85%);
+    border-color: var(--accent-color);
+}
+
+.login-register .form-check .form-check-label {
+    color: color-mix(in srgb, var(--default-color), transparent 30%);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.login-register .form-check .form-check-label a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+}
+
+.login-register .form-check .form-check-label a:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -1px;
+    left: 0;
+    background-color: var(--accent-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.login-register .form-check .form-check-label a:hover:after {
+    transform: scaleX(1);
+}
+
+.login-register .btn-primary {
+    background: linear-gradient(135deg, var(--accent-color), color-mix(in srgb, var(--accent-color), transparent 25%));
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-register .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+
+.login-register .btn-primary:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 576px) {
+    .login-register {
+        padding: 2rem;
+        border-radius: 16px;
+    }
+
+    .login-register .nav-tabs {
+        gap: 0.5rem;
+    }
+
+    .login-register .nav-tabs .nav-item .nav-link {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+    }
+
+    .login-register .form-control {
+        font-size: 16px;
     }
 }
