@@ -89,7 +89,7 @@ h6 {
 }
 
 .alert {
-  transition: opacity 0.6s ease;
+    transition: opacity 0.6s ease;
 }
 
 /* PHP Email Form Messages
@@ -1028,6 +1028,30 @@ textarea::-ms-input-placeholder {
     color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
+input[type=text]::-webkit-input-placeholder,
+input[type=email]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-moz-placeholder,
+input[type=email]::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]:-ms-input-placeholder,
+input[type=email]:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+input[type=text]::-ms-input-placeholder,
+input[type=email]::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
 input[type=text]::placeholder,
 input[type=email]::placeholder,
 textarea::placeholder {
@@ -1457,6 +1481,26 @@ section,
 .hero .booking-card select:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.hero .booking-card .form-control::-webkit-input-placeholder,
+.hero .booking-card select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-moz-placeholder,
+.hero .booking-card select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control:-ms-input-placeholder,
+.hero .booking-card select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.hero .booking-card .form-control::-ms-input-placeholder,
+.hero .booking-card select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 .hero .booking-card .form-control::-webkit-input-placeholder,
@@ -2749,6 +2793,26 @@ section,
     border-color: var(--accent-color);
     box-shadow: 0 0 0 0.15rem color-mix(in srgb, var(--accent-color), transparent 75%);
     background-color: var(--background-color);
+}
+
+.book-a-table .reservation-form-section .form-control::-webkit-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-webkit-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-moz-placeholder,
+.book-a-table .reservation-form-section .form-select::-moz-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control:-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select:-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
+}
+
+.book-a-table .reservation-form-section .form-control::-ms-input-placeholder,
+.book-a-table .reservation-form-section .form-select::-ms-input-placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 55%);
 }
 
 .book-a-table .reservation-form-section .form-control::-webkit-input-placeholder,
@@ -5624,8 +5688,7 @@ section#cart {
 }
 
 button#togglePassword {
-    border: 2px solid
- color-mix(in srgb, var(--default-color), transparent 90%);
+    border: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 @media (max-width: 576px) {
@@ -5646,4 +5709,39 @@ button#togglePassword {
     .login-register .form-control {
         font-size: 16px;
     }
+}
+
+.login-register .forgot-password {
+    color:
+        color-mix(in srgb, var(--accent-color), transparent 15%);
+    font-size: 0.95rem;
+    font-weight: 500;
+    position: relative;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.login-register .forgot-password:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -1px;
+  left: 0;
+  background-color: var(--accent-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.login-register .forgot-password:hover {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.login-register .forgot-password:hover:after {
+  transform: scaleX(1);
+}
+
+.forgot {
+    padding-bottom: min(245px);
 }

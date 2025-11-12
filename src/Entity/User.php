@@ -23,12 +23,16 @@ class User extends Entity
     private ?string $rememberMe = null;
     private ?string $rememberTokenHash = null;
     private ?\DateTimeImmutable $rememberExpiresAt = null;
+    private ?string $resetSelector = null;
+    private ?string $resetTokenHash = null;
+    private ?\DateTimeImmutable $resetTokenAt = null;
 
     // ---- Getters / setters ----
     public function getId(): ?int
     {
         return $this->id;
     }
+    
     public function setId(?int $id): self
     {
         $this->id = $id;
@@ -39,6 +43,7 @@ class User extends Entity
     {
         return $this->email;
     }
+
     public function setEmail(string $email): self
     {
         $this->email = strtolower(trim($email));
@@ -49,6 +54,7 @@ class User extends Entity
     {
         return $this->passwordHash;
     }
+
     public function setPasswordHash(string $hash): self
     {
         $this->passwordHash = $hash;
@@ -59,6 +65,7 @@ class User extends Entity
     {
         return $this->firstname;
     }
+    
     public function setFirstname(string $firstname): self
     {
         $this->firstname = ucfirst(mb_strtolower(trim($firstname)));
@@ -69,6 +76,7 @@ class User extends Entity
     {
         return $this->lastname;
     }
+
     public function setLastname(string $lastname): self
     {
         $this->lastname = ucfirst(mb_strtolower(trim($lastname)));
@@ -79,6 +87,7 @@ class User extends Entity
     {
         return $this->address;
     }
+
     public function setAddress(?string $address): self
     {
         $this->address = $address !== null ? trim($address) : null;
@@ -89,6 +98,7 @@ class User extends Entity
     {
         return $this->postalCode;
     }
+
     public function setPostalCode(?string $postalCode): self
     {
         $this->postalCode = $postalCode !== null ? trim($postalCode) : null;
@@ -99,6 +109,7 @@ class User extends Entity
     {
         return $this->city;
     }
+
     public function setCity(?string $city): self
     {
         $this->city = $city !== null ? ucfirst(mb_strtolower(trim($city))) : null;
@@ -109,6 +120,7 @@ class User extends Entity
     {
         return $this->phone;
     }
+
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone !== null ? preg_replace('/\s+/', '', $phone) : null;
@@ -119,6 +131,7 @@ class User extends Entity
     {
         return $this->role;
     }
+
     public function setRole(string $role): self
     {
         $role = strtoupper(trim($role));
@@ -130,6 +143,7 @@ class User extends Entity
     {
         return $this->createdAt;
     }
+
     public function setCreatedAt(?\DateTimeImmutable $d): self
     {
         $this->createdAt = $d;
@@ -140,6 +154,7 @@ class User extends Entity
     {
         return $this->lastLoginAt;
     }
+
     public function setLastLoginAt(?\DateTimeImmutable $d): self
     {
         $this->lastLoginAt = $d;
@@ -150,6 +165,7 @@ class User extends Entity
     {
         return $this->rememberMe;
     }
+
     public function setRememberMe(?string $v): self
     {
         $this->rememberMe = $v;
@@ -160,6 +176,7 @@ class User extends Entity
     {
         return $this->rememberTokenHash;
     }
+
     public function setRememberTokenHash(?string $v): self
     {
         $this->rememberTokenHash = $v;
@@ -170,9 +187,43 @@ class User extends Entity
     {
         return $this->rememberExpiresAt;
     }
+
     public function setRememberExpiresAt(?\DateTimeImmutable $d): self
     {
         $this->rememberExpiresAt = $d;
+        return $this;
+    }
+
+    public function getResetSelector(): ?string
+    {
+        return $this->resetSelector;
+    }
+
+    public function setResetSelector(?string $v): self
+    {
+        $this->resetSelector = $v;
+        return $this;
+    }
+
+    public function getResetTokenHash(): ?string
+    {
+        return $this->resetTokenHash;
+    }
+
+    public function setResetTokenHash(?string $v): self
+    {
+        $this->resetTokenHash = $v;
+        return $this;
+    }
+
+    public function getResetTokenAt(): ?\DateTimeImmutable
+    {
+        return $this->resetTokenAt;
+    }
+
+    public function setResetTokenAt(?\DateTimeImmutable $d): self
+    {
+        $this->resetTokenAt = $d;
         return $this;
     }
 

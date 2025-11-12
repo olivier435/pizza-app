@@ -38,6 +38,15 @@ final class UserRepository extends Repository
         if (!empty($row['rememberExpiresAt'])) {
             $u->setRememberExpiresAt(new \DateTimeImmutable((string)$row['rememberExpiresAt']));
         }
+        if (array_key_exists('resetSelector', $row)) {
+            $u->setResetSelector($row['resetSelector'] !== null ? (string)$row['resetSelector'] : null);
+        }
+        if (array_key_exists('resetTokenHash', $row)) {
+            $u->setResetTokenHash($row['resetTokenHash'] !== null ? (string)$row['resetTokenHash'] : null);
+        }
+        if (!empty($row['resetTokenAt'])) {
+            $u->setResetTokenAt(new \DateTimeImmutable((string)$row['resetTokenAt']));
+        }
         return $u;
     }
 
@@ -154,5 +163,44 @@ final class UserRepository extends Repository
     ");
         $st->execute();
         return $st->rowCount();
+    }
+
+    public function storeResetToken(int $userId, string $selector, string $tokenHash, \DateTimeImmutable $createdAt): bool
+    {
+        $sql = "UPDATE user
+            SET resetSelector = :sel,
+                resetTokenHash = :hash,
+                resetTokenAt = :at
+            WHERE id = :id";
+        $st = $this->pdo->prepare($sql);
+        return $st->execute([
+            ':sel'  => $selector,
+            ':hash' => $tokenHash,
+            ':at'   => $createdAt->format('Y-m-d H:i:s'),
+            ':id'   => $userId,
+        ]);
+    }
+
+    public function findByResetSelector(string $selector): ?\App\Entity\User
+    {
+        $st = $this->pdo->prepare("SELECT * FROM user WHERE resetSelector = :sel LIMIT 1");
+        $st->execute([':sel' => $selector]);
+        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        return $row ? $this->hydrate($row) : null;
+    }
+
+    public function updatePasswordAndClearReset(int $userId, string $passwordHash): bool
+    {
+        $sql = "UPDATE user
+            SET passwordHash = :ph,
+                resetSelector = NULL,
+                resetTokenHash = NULL,
+                resetTokenAt = NULL
+            WHERE id = :id";
+        $st = $this->pdo->prepare($sql);
+        return $st->execute([
+            ':ph' => $passwordHash,
+            ':id' => $userId,
+        ]);
     }
 }

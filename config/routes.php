@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Controller\Dev\FixturesController;
-use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController};
+use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController};
 
 return [
     ['GET',  '/',            [HomeController::class, 'index']],
@@ -34,4 +34,10 @@ return [
     // Fixtures (dev)
     ['GET', '/_fixtures/load',  [FixturesController::class, 'load']],
     ['GET', '/_fixtures/clear', [FixturesController::class, 'clear']],
+
+    // Forgot password
+    ['GET',  '/forgot-password',                         [ForgotPasswordController::class, 'requestForm']],
+    ['POST', '/forgot-password',                         [ForgotPasswordController::class, 'requestPost']],
+    ['GET',  '/forgot-password/{selector}/{token}',      [ForgotPasswordController::class, 'resetForm']],
+    ['POST', '/forgot-password/{selector}/{token}',      [ForgotPasswordController::class, 'resetPost']],
 ];

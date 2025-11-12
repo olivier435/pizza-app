@@ -19,7 +19,7 @@
     <section class="section login-register auth">
         <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
             <div class="row justify-content-center">
-                <div class="col-lg-5">
+                <div class="col-lg-6">
                     <div class="login-register-wraper">
                         <ul class="nav nav-tabs nav-tabs-bordered justify-content-center mb-4" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -55,7 +55,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mb-4">
                                         <div class="form-check">
                                             <div class="d-flex align-items-center">
                                                       <input type="checkbox" class="form-check-input" id="login-register-remember-me" name="remember">
@@ -64,6 +64,7 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <a href="/forgot-password" class="forgot-password">Oubli du mot de passe ?</a>
                                     </div>
                                     <div class="d-grid">
                                         <button class="btn btn-primary btn-lg" type="submit">Se connecter</button>

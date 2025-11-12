@@ -158,3 +158,10 @@ ALTER TABLE `user`
 
 -- Index utile sur le selector
 CREATE INDEX user_remember_me_IDX ON `user` (`rememberMe`);
+
+ALTER TABLE `user`
+  ADD COLUMN `resetSelector`   VARCHAR(24)  NULL DEFAULT NULL,
+  ADD COLUMN `resetTokenHash`  VARCHAR(255) NULL DEFAULT NULL,
+  ADD COLUMN `resetTokenAt`    DATETIME     NULL DEFAULT NULL;
+
+CREATE INDEX user_reset_selector_IDX ON `user` (`resetSelector`);
