@@ -127,8 +127,8 @@ final class UserRepository extends Repository
                 rememberTokenHash = :hash,
                 rememberExpiresAt = :exp
             WHERE id = :id";
-        $st = $this->pdo->prepare($sql);
-        return $st->execute([
+        $req = $this->pdo->prepare($sql);
+        return $req->execute([
             ':sel'  => $selector,
             ':hash' => $validatorHash,
             ':exp'  => $expires->format('Y-m-d H:i:s'),
@@ -138,31 +138,31 @@ final class UserRepository extends Repository
 
     public function clearRememberTokenByUserId(int $userId): void
     {
-        $st = $this->pdo->prepare("
+        $req = $this->pdo->prepare("
         UPDATE user
         SET rememberMe = NULL, rememberTokenHash = NULL, rememberExpiresAt = NULL
         WHERE id = :id
     ");
-        $st->execute([':id' => $userId]);
+        $req->execute([':id' => $userId]);
     }
 
     public function findByRememberMe(string $selector): ?User
     {
-        $st = $this->pdo->prepare("SELECT * FROM user WHERE rememberMe = :sel LIMIT 1");
-        $st->execute([':sel' => $selector]);
-        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        $req = $this->pdo->prepare("SELECT * FROM user WHERE rememberMe = :sel LIMIT 1");
+        $req->execute([':sel' => $selector]);
+        $row = $req->fetch(\PDO::FETCH_ASSOC);
         return $row ? $this->hydrate($row) : null;
     }
 
     public function purgeExpiredRememberTokens(): int
     {
-        $st = $this->pdo->prepare("
+        $req = $this->pdo->prepare("
         UPDATE user
         SET rememberMe = NULL, rememberTokenHash = NULL, rememberExpiresAt = NULL
         WHERE rememberExpiresAt IS NOT NULL AND rememberExpiresAt < NOW()
     ");
-        $st->execute();
-        return $st->rowCount();
+        $req->execute();
+        return $req->rowCount();
     }
 
     public function storeResetToken(int $userId, string $selector, string $tokenHash, \DateTimeImmutable $createdAt): bool
@@ -172,8 +172,8 @@ final class UserRepository extends Repository
                 resetTokenHash = :hash,
                 resetTokenAt = :at
             WHERE id = :id";
-        $st = $this->pdo->prepare($sql);
-        return $st->execute([
+        $req = $this->pdo->prepare($sql);
+        return $req->execute([
             ':sel'  => $selector,
             ':hash' => $tokenHash,
             ':at'   => $createdAt->format('Y-m-d H:i:s'),
@@ -181,11 +181,11 @@ final class UserRepository extends Repository
         ]);
     }
 
-    public function findByResetSelector(string $selector): ?\App\Entity\User
+    public function findByResetSelector(string $selector): ?User
     {
-        $st = $this->pdo->prepare("SELECT * FROM user WHERE resetSelector = :sel LIMIT 1");
-        $st->execute([':sel' => $selector]);
-        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        $req = $this->pdo->prepare("SELECT * FROM user WHERE resetSelector = :sel LIMIT 1");
+        $req->execute([':sel' => $selector]);
+        $row = $req->fetch(PDO::FETCH_ASSOC);
         return $row ? $this->hydrate($row) : null;
     }
 
@@ -197,10 +197,82 @@ final class UserRepository extends Repository
                 resetTokenHash = NULL,
                 resetTokenAt = NULL
             WHERE id = :id";
-        $st = $this->pdo->prepare($sql);
-        return $st->execute([
+        $req = $this->pdo->prepare($sql);
+        return $req->execute([
             ':ph' => $passwordHash,
             ':id' => $userId,
         ]);
+    }
+
+    public function findByIdBasic(int $id): ?array
+    {
+        $sql = 'SELECT id, email, firstname, lastname, phone FROM user WHERE id = ?';
+        $req  = $this->pdo->prepare($sql);
+        $req->execute([$id]);
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
+    }
+
+    public function findById(int $id): ?User
+    {
+        $sql = 'SELECT * FROM user WHERE id = ?';
+        $req  = $this->pdo->prepare($sql);
+        $req->execute([$id]);
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        return $this->hydrate($row);
+    }
+
+    public function findOneByEmail(string $email): ?User
+    {
+        $sql = 'SELECT * FROM user WHERE email = ?';
+        $req  = $this->pdo->prepare($sql);
+        $req->execute([$email]);
+        $row = $req->fetch(PDO::FETCH_ASSOC);
+        if (!$row) {
+            return null;
+        }
+        return $this->hydrate($row);
+    }
+
+    /**
+     * Vérifie si un email est déjà pris par un autre utilisateur.
+     */
+    public function isEmailTakenByOther(string $email, int $excludeUserId): bool
+    {
+        $sql = 'SELECT id FROM user WHERE email = ? AND id <> ? LIMIT 1';
+        $req  = $this->pdo->prepare($sql);
+        $req->execute([$email, $excludeUserId]);
+        return (bool) $req->fetchColumn();
+    }
+
+    /**
+     * Met à jour (partiellement) un user depuis l'entité.
+     */
+    public function updateFromEntity(User $u): void
+    {
+        $sql = 'UPDATE user SET firstname = ?, lastname = ?, email = ?, phone = ? WHERE id = ?';
+        $req  = $this->pdo->prepare($sql);
+        $req->execute([
+            $u->getFirstname(),
+            $u->getLastname(),
+            $u->getEmail(),
+            $u->getPhone(),
+            (int)$u->getId(),
+        ]);
+    }
+
+    public function updatePasswordById(int $id, string $hash): void
+    {
+        $req = $this->pdo->prepare('UPDATE user SET passwordHash = :h WHERE id = :id');
+        $req->execute([':h' => $hash, ':id' => $id]);
+    }
+
+    public function deleteById(int $id): bool
+    {
+        $st = $this->pdo->prepare('DELETE FROM user WHERE id = :id');
+        return $st->execute([':id' => $id]);
     }
 }

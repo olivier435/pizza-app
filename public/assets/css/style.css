@@ -376,6 +376,14 @@ h6 {
         left: -100%;
         visibility: visible;
     }
+
+    .ygyyfzzq {
+        color: var(--nav-color);
+    }
+
+    .header-action-btn i.bi-person {
+        font-size: 28px !important;
+    }
 }
 
 /* Navmenu - Mobile */
@@ -503,6 +511,84 @@ h6 {
     .mobile-nav-active .navmenu>ul {
         display: block;
     }
+}
+
+.account-dropdown .dropdown-menu {
+    background-color: #ffffff;
+    min-width: 280px;
+    padding: 0;
+    border-radius: 6px;
+    margin-top: 0.75rem;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.account-dropdown .dropdown-menu .dropdown-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent-color), transparent 90%);
+}
+
+.account-dropdown .dropdown-menu .dropdown-header h6 {
+    margin: 0 0 0.25rem;
+    color: #2d465e;
+    font-size: 16px;
+}
+
+.account-dropdown .dropdown-menu .dropdown-header p {
+    font-size: 13px;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+}
+
+.account-dropdown .dropdown-menu .dropdown-body {
+    padding: 1rem 0;
+}
+
+.account-dropdown .dropdown-menu .dropdown-body .dropdown-item {
+    padding: 0.5rem 1.25rem;
+    font-size: 14px;
+    color: var(--default-color);
+    justify-content: flex-start;
+    transition: all 0.2s ease;
+}
+
+.account-dropdown .dropdown-menu .dropdown-body .dropdown-item i {
+    color: color-mix(in srgb, var(--default-color), transparent 30%);
+    transition: color 0.2s ease;
+    font-size: 16px;
+}
+
+.account-dropdown .dropdown-menu .dropdown-body .dropdown-item:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+    color: var(--accent-color);
+}
+
+.account-dropdown .dropdown-menu .dropdown-body .dropdown-item:hover i {
+    color: var(--accent-color);
+}
+
+.account-dropdown .dropdown-menu .dropdown-footer {
+    padding: 1.25rem;
+    background-color: color-mix(in srgb, var(--default-color), transparent 97%);
+    border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.account-dropdown .dropdown-menu .dropdown-footer .btn {
+    font-size: 14px;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    transition: 0.3s;
+}
+
+.account-dropdown .dropdown-menu .dropdown-footer .btn-outline-primary {
+    border-color: var(--accent-color);
+    background-color: transparent;
+    color: var(--accent-color);
+}
+
+.account-dropdown .dropdown-menu .dropdown-footer .btn-outline-primary:hover {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
 }
 
 /*--------------------------------------------------------------
@@ -5722,26 +5808,300 @@ button#togglePassword {
 }
 
 .login-register .forgot-password:after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: -1px;
-  left: 0;
-  background-color: var(--accent-color);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    bottom: -1px;
+    left: 0;
+    background-color: var(--accent-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
 }
 
 .login-register .forgot-password:hover {
-  color: var(--accent-color);
-  text-decoration: none;
+    color: var(--accent-color);
+    text-decoration: none;
 }
 
 .login-register .forgot-password:hover:after {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
 
 .forgot {
     padding-bottom: min(245px);
+}
+
+/*--------------------------------------------------------------
+# Account Section
+--------------------------------------------------------------*/
+.account .mobile-menu .mobile-menu-toggle {
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 500;
+    color: var(--heading-color);
+    transition: all 0.3s ease;
+}
+
+.account .mobile-menu .mobile-menu-toggle i {
+    font-size: 20px;
+}
+
+.account .mobile-menu .mobile-menu-toggle:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+}
+
+.account .profile-menu {
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    padding: 24px;
+    height: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.account .profile-menu .menu-nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--default-color);
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.account .profile-menu .menu-nav .nav-link i {
+    font-size: 20px;
+    margin-right: 12px;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    transition: all 0.3s ease;
+}
+
+.account .profile-menu .menu-nav .nav-link span {
+    flex: 1;
+}
+
+.account .profile-menu .menu-nav .nav-link .badge {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    flex: 0;
+}
+
+.account .profile-menu .menu-nav .nav-link .badge {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+}
+
+.account .profile-menu .menu-nav .nav-link:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+    color: var(--accent-color);
+}
+
+.account .profile-menu .menu-nav .nav-link:hover i {
+    color: var(--accent-color);
+}
+
+.account .profile-menu .menu-nav .nav-link.active {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    font-weight: 500;
+}
+
+.account .profile-menu .menu-nav .nav-link.active i {
+    color: var(--contrast-color);
+}
+
+.account .profile-menu .menu-nav .nav-link.active .badge {
+    background-color: var(--contrast-color);
+    color: var(--accent-color);
+}
+
+.account .profile-menu .menu-footer {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.account .profile-menu .menu-footer a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: var(--default-color);
+    border-radius: 12px;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+.account .profile-menu .menu-footer a i {
+    font-size: 20px;
+    margin-right: 12px;
+    color: color-mix(in srgb, var(--default-color), transparent 40%);
+    transition: all 0.3s ease;
+}
+
+.account .profile-menu .menu-footer a:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 92%);
+    color: var(--accent-color);
+}
+
+.account .profile-menu .menu-footer a:hover i {
+    color: var(--accent-color);
+}
+
+.account .profile-menu .menu-footer a.logout-link {
+    color: #ef4444;
+}
+
+.account .profile-menu .menu-footer a.logout-link i {
+    color: #ef4444;
+}
+
+.account .profile-menu .menu-footer a.logout-link:hover {
+    background-color: rgba(239, 68, 68, 0.08);
+}
+
+.account .content-area {
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    padding: 24px;
+    height: 100%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.account .content-area .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.account .content-area .section-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: var(--nav-font);
+}
+
+.account .content-area .section-header .header-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+
+.account .settings-content .settings-section {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.account .settings-content .settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.account .settings-content .settings-section h3 {
+    margin: 0 0 20px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: var(--nav-font);
+}
+
+.account .settings-content .settings-form .form-label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-family: var(--nav-font);
+}
+
+.account .settings-content .settings-form .form-control {
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.account .settings-content .settings-form .form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color), transparent 90%);
+}
+
+.account .settings-content .settings-form .form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.account .settings-content .settings-form .form-buttons .btn-save {
+  height: 40px;
+  padding: 0 24px;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.account .settings-content .settings-form .form-buttons .btn-save:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
+.account .settings-content .settings-section.danger-zone {
+  border-color: #fee2e2;
+}
+
+.account .settings-content .settings-section.danger-zone h3 {
+  color: #ef4444;
+}
+
+.account .settings-content .settings-section.danger-zone .danger-zone-content p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+}
+
+.account .settings-content .settings-section.danger-zone .danger-zone-content .btn-danger {
+  height: 40px;
+  padding: 0 20px;
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.account .settings-content .settings-section.danger-zone .danger-zone-content .btn-danger:hover {
+  background-color: #dc2626;
+}
+
+@media (max-width: 991.98px) {
+    .account .profile-menu {
+        margin-bottom: 24px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .account .content-area {
+        padding: 20px;
+    }
 }

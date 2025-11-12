@@ -68,7 +68,7 @@ class User extends Entity
     
     public function setFirstname(string $firstname): self
     {
-        $this->firstname = ucfirst(mb_strtolower(trim($firstname)));
+        $this->firstname = mb_convert_case(trim($firstname), MB_CASE_TITLE, 'UTF-8');
         return $this;
     }
 
@@ -79,7 +79,7 @@ class User extends Entity
 
     public function setLastname(string $lastname): self
     {
-        $this->lastname = ucfirst(mb_strtolower(trim($lastname)));
+        $this->lastname = mb_convert_case(trim($lastname), MB_CASE_TITLE, 'UTF-8');
         return $this;
     }
 
@@ -112,7 +112,7 @@ class User extends Entity
 
     public function setCity(?string $city): self
     {
-        $this->city = $city !== null ? ucfirst(mb_strtolower(trim($city))) : null;
+        $this->city = $city !== null ? mb_convert_case(trim($city), MB_CASE_TITLE, 'UTF-8') : null;
         return $this;
     }
 

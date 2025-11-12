@@ -1,11 +1,6 @@
 <?php
-// templates/layout/_flash.php
-
-// Ne pas démarrer la session ici si ton app le fait déjà dans les contrôleurs.
-// On lit simplement ce qui existe.
 $flashes = [];
 
-// Nouveau format : tableau de messages typés
 if (!empty($_SESSION['_flash']) && is_array($_SESSION['_flash'])) {
     foreach ($_SESSION['_flash'] as $item) {
         if (is_string($item)) {
@@ -38,7 +33,6 @@ $map = [
 
 // Rendu
 if (!empty($flashes)): ?>
-  <div class="container my-3">
     <?php foreach ($flashes as $f):
       $type = strtolower((string)$f['type']);
       $cls  = $map[$type] ?? 'info';
@@ -50,5 +44,4 @@ if (!empty($flashes)): ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     <?php endforeach; ?>
-  </div>
 <?php endif; ?>

@@ -5,24 +5,37 @@ $isPizzas  = ($currentPath === '/pizzas');
 $isCart    = ($currentPath === '/panier');
 
 $anchor = function (string $id) use ($isHome): string {
-    return $isHome ? "#{$id}" : "/#{$id}";
+  return $isHome ? "#{$id}" : "/#{$id}";
 };
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+  session_start();
 }
 
 /** Nombre de pizzas DISTINCTES dans le panier */
 $cartDistinct = 0;
 if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-    $unique = [];
-    foreach ($_SESSION['cart'] as $line) {
-        $pid = $line['pizzaId'] ?? ($line['pizza_id'] ?? ($line['pizza']['id'] ?? null));
-        if ($pid !== null) {
-            $unique[(int)$pid] = true;
-        }
+  $unique = [];
+  foreach ($_SESSION['cart'] as $line) {
+    $pid = $line['pizzaId'] ?? ($line['pizza_id'] ?? ($line['pizza']['id'] ?? null));
+    if ($pid !== null) {
+      $unique[(int)$pid] = true;
     }
-    $cartDistinct = count($unique);
+  }
+  $cartDistinct = count($unique);
+}
+
+$isLogged = isset($_SESSION['user']) && !empty($_SESSION['user']['id'] ?? null);
+$displayName = '';
+if ($isLogged) {
+  $fn = (string)($_SESSION['user']['firstname'] ?? '');
+  $ln = (string)($_SESSION['user']['lastname'] ?? '');
+  $displayName = htmlspecialchars(
+    (mb_substr($fn, 0, 1) ? mb_strtoupper(mb_substr($fn, 0, 1)) . '. ' : '')
+      . mb_convert_case($ln, MB_CASE_TITLE, 'UTF-8'),
+    ENT_QUOTES,
+    'UTF-8'
+  );
 }
 ?>
 <header id="header" class="header fixed-top">
@@ -38,7 +51,7 @@ if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
       </div>
       <div class="social-links d-none d-md-flex align-items-center">
         <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
         <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
         <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
       </div>
@@ -69,6 +82,55 @@ if (!empty($_SESSION['cart']) && is_array($_SESSION['cart'])) {
               <?php endif; ?>
             </a>
           </li>
+          <div class="dropdown account-dropdown">
+            <button class="header-action-btn ygyyfzzq" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person"></i>
+            </button>
+            <div class="dropdown-menu">
+              <div class="dropdown-header">
+                <h6>
+                  <?php if ($isLogged): ?>
+                    Bonjour <?= $displayName ?: '!' ?>
+                  <?php else: ?>
+                    Bienvenue au <span class="sitename">Papacionu</span>
+                  <?php endif; ?>
+                </h6>
+                <p class="mb-0">Accéder à votre compte et gérer vos commandes</p>
+              </div>
+              <div class="dropdown-body">
+                <?php if ($isLogged): ?>
+                  <a class="dropdown-item d-flex align-items-center" href="/compte">
+                    <i class="bi bi-person-circle me-2"></i>
+                    <span>Mon Profil</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="/compte?tab=orders">
+                    <i class="bi bi-bag-check me-2"></i>
+                    <span>Mes Commandes</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="/compte?tab=settings">
+                    <i class="bi bi-gear me-2"></i>
+                    <span>Paramètres</span>
+                  </a>
+                <?php else: ?>
+                  <a class="dropdown-item d-flex align-items-center" href="/login">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    <span>Se connecter</span>
+                  </a>
+                  <a class="dropdown-item d-flex align-items-center" href="/register">
+                    <i class="bi bi-person-plus me-2"></i>
+                    <span>Créer un compte</span>
+                  </a>
+                <?php endif; ?>
+              </div>
+              <div class="dropdown-footer">
+                <?php if ($isLogged): ?>
+                  <a href="/logout" class="btn btn-outline-primary w-100">Se déconnecter</a>
+                <?php else: ?>
+                  <a href="/login" class="btn btn-primary w-100">Se connecter</a>
+                <?php endif; ?>
+              </div>
+            </div>
+          </div>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Menu"></i>
       </nav>

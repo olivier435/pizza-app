@@ -1,3 +1,4 @@
+<?php include __DIR__ . '/../layout/_flash.php'; ?>
 <section id="home" class="hero section dark-background">
     <div class="hero-background">
         <video autoplay="" muted="" loop="" playsinline="">

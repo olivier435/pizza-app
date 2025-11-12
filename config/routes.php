@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Controller\Dev\FixturesController;
-use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController};
+use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController, ProfileController, AccountDeleteController};
 
 return [
     ['GET',  '/',            [HomeController::class, 'index']],
@@ -40,4 +40,10 @@ return [
     ['POST', '/forgot-password',                         [ForgotPasswordController::class, 'requestPost']],
     ['GET',  '/forgot-password/{selector}/{token}',      [ForgotPasswordController::class, 'resetForm']],
     ['POST', '/forgot-password/{selector}/{token}',      [ForgotPasswordController::class, 'resetPost']],
+
+    // Profile account
+    ['GET',  '/compte',          [ProfileController::class, 'show']],
+    ['POST', '/compte/settings',  [ProfileController::class, 'updateSettings']],
+    ['POST', '/compte/security',   [ProfileController::class, 'updatePassword']],
+    ['POST', '/compte/delete', [AccountDeleteController::class, 'deleteAccount']],
 ];

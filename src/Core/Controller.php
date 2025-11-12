@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Core;
@@ -32,5 +33,11 @@ abstract class Controller
     protected function isGranted(string $role): bool
     {
         return isset($_SESSION['user']) && ($_SESSION['user']['role'] ?? null) === $role;
+    }
+
+    protected function getUser(): ?array
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        return $_SESSION['user'] ?? null;
     }
 }

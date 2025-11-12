@@ -32,7 +32,6 @@ $bodyClass = ($isHome ? 'is-home' : 'is-page');
   <?php require __DIR__ . '/../partials/_nav.php'; ?>
 
   <main class="main">
-    <?php @require __DIR__ . '/_flash.php'; ?>
     <?= $content ?? '' ?>
   </main>
 
@@ -69,6 +68,7 @@ $bodyClass = ($isHome ? 'is-home' : 'is-page');
     })();
   </script>
 
+  <script src="/assets/js/phone-format.js"></script>
   <!-- Main JS File -->
   <script src="/assets/js/main.js"></script>
   <!-- Pizza modal / cart JS -->
