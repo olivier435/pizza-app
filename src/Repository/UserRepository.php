@@ -29,6 +29,15 @@ final class UserRepository extends Repository
         if (!empty($row['lastLoginAt'])) {
             $u->setLastLoginAt(new \DateTimeImmutable((string)$row['lastLoginAt']));
         }
+        if (array_key_exists('rememberMe', $row)) {
+            $u->setRememberMe($row['rememberMe'] !== null ? (string)$row['rememberMe'] : null);
+        }
+        if (array_key_exists('rememberTokenHash', $row)) {
+            $u->setRememberTokenHash($row['rememberTokenHash'] !== null ? (string)$row['rememberTokenHash'] : null);
+        }
+        if (!empty($row['rememberExpiresAt'])) {
+            $u->setRememberExpiresAt(new \DateTimeImmutable((string)$row['rememberExpiresAt']));
+        }
         return $u;
     }
 
@@ -100,5 +109,50 @@ final class UserRepository extends Repository
     {
         $req = $this->pdo->prepare("DELETE FROM user WHERE email = :email");
         return $req->execute([':email' => strtolower(trim($email))]);
+    }
+
+    public function saveRememberToken(int $userId, string $selector, string $validatorHash, \DateTimeImmutable $expires): bool
+    {
+        $sql = "UPDATE user
+            SET rememberMe = :sel,
+                rememberTokenHash = :hash,
+                rememberExpiresAt = :exp
+            WHERE id = :id";
+        $st = $this->pdo->prepare($sql);
+        return $st->execute([
+            ':sel'  => $selector,
+            ':hash' => $validatorHash,
+            ':exp'  => $expires->format('Y-m-d H:i:s'),
+            ':id'   => $userId,
+        ]);
+    }
+
+    public function clearRememberTokenByUserId(int $userId): void
+    {
+        $st = $this->pdo->prepare("
+        UPDATE user
+        SET rememberMe = NULL, rememberTokenHash = NULL, rememberExpiresAt = NULL
+        WHERE id = :id
+    ");
+        $st->execute([':id' => $userId]);
+    }
+
+    public function findByRememberMe(string $selector): ?User
+    {
+        $st = $this->pdo->prepare("SELECT * FROM user WHERE rememberMe = :sel LIMIT 1");
+        $st->execute([':sel' => $selector]);
+        $row = $st->fetch(\PDO::FETCH_ASSOC);
+        return $row ? $this->hydrate($row) : null;
+    }
+
+    public function purgeExpiredRememberTokens(): int
+    {
+        $st = $this->pdo->prepare("
+        UPDATE user
+        SET rememberMe = NULL, rememberTokenHash = NULL, rememberExpiresAt = NULL
+        WHERE rememberExpiresAt IS NOT NULL AND rememberExpiresAt < NOW()
+    ");
+        $st->execute();
+        return $st->rowCount();
     }
 }

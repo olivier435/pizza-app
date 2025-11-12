@@ -20,6 +20,9 @@ class User extends Entity
     private string $role = 'USER';
     private ?\DateTimeImmutable $createdAt = null;
     private ?\DateTimeImmutable $lastLoginAt = null;
+    private ?string $rememberMe = null;
+    private ?string $rememberTokenHash = null;
+    private ?\DateTimeImmutable $rememberExpiresAt = null;
 
     // ---- Getters / setters ----
     public function getId(): ?int
@@ -140,6 +143,36 @@ class User extends Entity
     public function setLastLoginAt(?\DateTimeImmutable $d): self
     {
         $this->lastLoginAt = $d;
+        return $this;
+    }
+
+    public function getRememberMe(): ?string
+    {
+        return $this->rememberMe;
+    }
+    public function setRememberMe(?string $v): self
+    {
+        $this->rememberMe = $v;
+        return $this;
+    }
+
+    public function getRememberTokenHash(): ?string
+    {
+        return $this->rememberTokenHash;
+    }
+    public function setRememberTokenHash(?string $v): self
+    {
+        $this->rememberTokenHash = $v;
+        return $this;
+    }
+
+    public function getRememberExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->rememberExpiresAt;
+    }
+    public function setRememberExpiresAt(?\DateTimeImmutable $d): self
+    {
+        $this->rememberExpiresAt = $d;
         return $this;
     }
 

@@ -150,3 +150,11 @@ INSERT INTO `size` (`label`, `diameterCm`) VALUES
 ('M', 28.0), ('L', 33.0), ('XL', 40.0);
 
 ALTER TABLE ingredient ADD COLUMN extraPriceCents INT UNSIGNED NULL COMMENT 'Extra price for addition on pizza';
+
+ALTER TABLE `user`
+  ADD COLUMN `rememberMe`    VARCHAR(24)  NULL DEFAULT NULL,
+  ADD COLUMN `rememberTokenHash`   VARCHAR(255) NULL DEFAULT NULL,
+  ADD COLUMN `rememberExpiresAt`   DATETIME     NULL DEFAULT NULL;
+
+-- Index utile sur le selector
+CREATE INDEX user_remember_me_IDX ON `user` (`rememberMe`);

@@ -55,6 +55,16 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <div class="form-check">
+                                            <div class="d-flex align-items-center">
+                                                      <input type="checkbox" class="form-check-input" id="login-register-remember-me" name="remember">
+                                                <label class="form-check-label" for="login-register-remember-me">
+                                                    Se souvenir de moi
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="d-grid">
                                         <button class="btn btn-primary btn-lg" type="submit">Se connecter</button>
                                     </div>

@@ -15,6 +15,25 @@ if (APP_DEBUG) {
 }
 
 use App\Core\Router;
+use App\Security\RememberMeService;
+
+// ---- Auto-login Remember Me (si pas déjà connecté) ----
+if (!isset($_SESSION['user'])) {
+    $rm = new RememberMeService(days: 7);
+
+    // tente l'auto-login via cookie REMEMBERME
+    $user = $rm->tryAutoLogin();
+    if ($user) {
+        $_SESSION['user'] = $user->toSessionArray();
+    }
+
+    // purge best-effort des tokens expirés (une fois par session)
+    if (!isset($_SESSION['_purged_rm'])) {
+        $_SESSION['_purged_rm'] = true;
+        $rm->purgeExpired();
+    }
+}
+// -------------------------------------------------------
 
 $router = new Router(require dirname(__DIR__).'/config/routes.php');
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

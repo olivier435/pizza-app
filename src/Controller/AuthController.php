@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Core\Controller;
 use App\Repository\UserRepository;
 use App\Security\PasswordValidator;
+use App\Security\RememberMeService;
 
 final class AuthController extends Controller
 {
@@ -28,6 +29,7 @@ final class AuthController extends Controller
         if (session_status() !== PHP_SESSION_ACTIVE) session_start();
         $email = trim((string)($_POST['email'] ?? ''));
         $pass  = (string)($_POST['password'] ?? '');
+        $remember = isset($_POST['remember']) && $_POST['remember'] !== '';
 
         $_SESSION['_last_email'] = $email;
 
@@ -48,6 +50,15 @@ final class AuthController extends Controller
         // si connexion ok → mise en session
         $_SESSION['user'] = $user->toSessionArray();
         $repo->touchLastLogin((int)$user->getId());
+
+        // Remember-me via service
+        $rm = new RememberMeService(days: 7);
+        if ($remember) {
+            $rm->issue($user);
+        } else {
+            // Nettoie un éventuel cookie existant
+            $rm->clearForUserId((int)$user->getId());
+        }
 
         $target = $_SESSION['_target_path'] ?? '/checkout';
         unset($_SESSION['_target_path']);
@@ -109,7 +120,8 @@ final class AuthController extends Controller
         $repo = new UserRepository();
         if ($repo->findByEmail($email)) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Un compte existe déjà avec cet email.'];
-            $this->redirect('/register'); return;
+            $this->redirect('/register');
+            return;
         }
 
         // Construction entité (normalisation prénom/nom dans les setters)
@@ -138,6 +150,13 @@ final class AuthController extends Controller
     public function logout(): void
     {
         if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        if (!empty($_SESSION['user']['id'])) {
+            (new RememberMeService())->clearForUserId((int)$_SESSION['user']['id']);
+        } else {
+            // Pas d'user en session, on supprime juste le cookie si présent
+            setcookie('REMEMBERME', '', time() - 3600, '/');
+            unset($_COOKIE['REMEMBERME']);
+        }
         unset($_SESSION['user']);
         $this->redirect('/login');
     }
