@@ -15,7 +15,7 @@
     <section class="section login-register auth">
         <div class="container aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
             <div class="row justify-content-center">
-                <div class="col-lg-5">
+                <div class="col-lg-6">
                     <div class="login-register-wraper">
                         <ul class="nav nav-tabs nav-tabs-bordered justify-content-center mb-4" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -48,14 +48,37 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="mb-4">
-                                                <label for="password" class="form-label">Mot de passe (min. 8)</label>
-                                                <input id="password" name="password" type="password" minlength="8" required class="form-control">
+                                                <label for="password" class="form-label">Mot de passe (fort ou très fort)</label>
+                                                <div class="input-group mb-2">
+                                                    <input id="password" name="password" type="password" minlength="8" required class="form-control">
+                                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword"
+                                                        aria-label="Afficher le mot de passe" aria-pressed="false">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-primary" type="button" id="generate-password" title="Générer un mot de passe fort">
+                                                        <i class="bi bi-shuffle"></i> <span>Générer</span>
+                                                    </button>
+                                                </div>
+                                                <span id="entropy" class="badge text-bg-secondary">Très faible</span>
+                                                <div class="progress mt-2" style="height: 6px;">
+                                                    <div id="password-progress" class="progress-bar bg-danger" role="progressbar" style="width: 5%;"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="mb-4">
                                                 <label for="password2" class="form-label">Confirmer le mot de passe</label>
                                                 <input id="password2" name="password2" type="password" minlength="8" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="checkbox" class="form-check-input" id="login-register-terms" name="terms" required="">
+                                                    <label class="form-check-label" for="login-register-terms">
+                                                        J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a>.
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -74,3 +97,5 @@
         </div>
     </section>
 </main>
+
+<script type="module" src="/assets/js/register.js"></script>

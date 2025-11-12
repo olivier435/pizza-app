@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Core\Controller;
 use App\Repository\UserRepository;
+use App\Security\PasswordValidator;
 
 final class AuthController extends Controller
 {
@@ -72,23 +73,37 @@ final class AuthController extends Controller
         $password2 = (string)($_POST['password2'] ?? '');
         $firstname = (string)($_POST['firstname'] ?? '');
         $lastname  = (string)($_POST['lastname']  ?? '');
+        $termsAccepted = isset($_POST['terms']) && (string)$_POST['terms'] !== '';
 
         // Validations de base
         if ($email === '' || $password === '' || $password2 === '' || $firstname === '' || $lastname === '') {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Veuillez remplir tous les champs requis.'];
-            $this->redirect('/register'); return;
+            $this->redirect('/register');
+            return;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Email invalide.'];
-            $this->redirect('/register'); return;
+            $this->redirect('/register');
+            return;
         }
         if ($password !== $password2) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Les mots de passe ne correspondent pas.'];
-            $this->redirect('/register'); return;
+            $this->redirect('/register');
+            return;
         }
-        if (strlen($password) < 8) {
-            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Mot de passe trop court (8 caractères minimum).'];
-            $this->redirect('/register'); return;
+        if (!$termsAccepted) {
+            $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Vous devez accepter les conditions d'utilisation et la politique de confidentialité."];
+            $this->redirect('/register');
+            return;
+        }
+
+        $pwErrors = PasswordValidator::validate($password, $email, $firstname, $lastname);
+        if (!empty($pwErrors)) {
+            foreach ($pwErrors as $err) {
+                $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => $err];
+            }
+            $this->redirect('/register');
+            return;
         }
 
         $repo = new UserRepository();
@@ -108,7 +123,8 @@ final class AuthController extends Controller
         $id = $repo->createFromEntity($user);
         if (!$id) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Impossible de créer le compte pour le moment."];
-            $this->redirect('/register'); return;
+            $this->redirect('/register');
+            return;
         }
 
         $user->setId($id);

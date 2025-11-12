@@ -37,7 +37,23 @@
                                     </div>
                                     <div class="mb-4">
                                         <label for="password" class="form-label">Mot de passe</label>
-                                        <input id="password" name="password" type="password" required class="form-control">
+                                        <div class="input-group">
+                                            <input
+                                                id="password"
+                                                name="password"
+                                                type="password"
+                                                required
+                                                class="form-control"
+                                                autocomplete="current-password">
+                                            <button
+                                                class="btn btn-outline-secondary"
+                                                type="button"
+                                                id="togglePassword"
+                                                aria-label="Afficher le mot de passe"
+                                                aria-pressed="false">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="d-grid">
                                         <button class="btn btn-primary btn-lg" type="submit">Se connecter</button>
@@ -52,3 +68,22 @@
         </div>
     </section>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const pwd = document.getElementById('password');
+        const btn = document.getElementById('togglePassword');
+        if (!pwd || !btn) return;
+
+        btn.addEventListener('click', () => {
+            const show = pwd.type === 'password';
+            pwd.type = show ? 'text' : 'password';
+
+            btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+            btn.setAttribute('aria-label', show ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+
+            const icon = btn.querySelector('i');
+            if (icon) icon.className = show ? 'bi bi-eye-slash' : 'bi bi-eye';
+        });
+    });
+</script>
