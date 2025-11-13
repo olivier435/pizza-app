@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Controller\Dev\FixturesController;
-use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController, ProfileController, AccountDeleteController};
+use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController, ProfileController, AccountDeleteController, SuccessController};
 
 return [
     ['GET',  '/',            [HomeController::class, 'index']],
@@ -23,6 +23,10 @@ return [
 
     // Checkout
     ['GET',  '/checkout', [CheckoutController::class, 'index']],
+    ['POST', '/checkout/confirm', [CheckoutController::class, 'confirm']],
+
+    // Success
+    ['GET', '/checkout/success', [SuccessController::class, 'success']],
 
     // Auth
     ['GET',  '/login',    [AuthController::class, 'loginForm']],

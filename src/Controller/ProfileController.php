@@ -9,6 +9,7 @@ use App\Core\Controller;
 use App\Repository\UserRepository;
 use App\Security\PasswordValidator;
 use App\Service\UserProfileValidator;
+use App\Repository\PurchaseRepository;
 
 final class ProfileController extends Controller
 {
@@ -48,9 +49,14 @@ final class ProfileController extends Controller
         $allowed = ['settings', 'orders'];
         if (!in_array($tab, $allowed, true)) $tab = 'settings';
 
+        $userId = (int)($sessionUser['id'] ?? 0);
+        $purchaseRepo = new PurchaseRepository();
+        $orders = $purchaseRepo->findAllWithItemsByUserId($userId);
+
         $this->render('account/profile', [
             'pageTitle' => 'Mon compte',
             'user'      => $userArray,
+            'orders'  => $orders,
             'activeTab' => $tab,
             'csrfDelete' => $csrfDelete,
         ]);
