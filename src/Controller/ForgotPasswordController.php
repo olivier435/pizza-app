@@ -1,12 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\Mailer;
 use App\Core\Controller;
 use App\Repository\UserRepository;
-use App\Security\PasswordResetService;
 use App\Security\PasswordValidator;
+use App\Security\PasswordResetService;
 
 final class ForgotPasswordController extends Controller
 {
@@ -25,7 +27,8 @@ final class ForgotPasswordController extends Controller
         $email = trim((string)($_POST['email'] ?? ''));
         if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Email invalide.'];
-            $this->redirect('/forgot-password'); return;
+            $this->redirect('/forgot-password');
+            return;
         }
 
         $repo = new UserRepository();
@@ -34,14 +37,38 @@ final class ForgotPasswordController extends Controller
         // Discrétion : même message qu'il existe ou pas
         if (!$user) {
             $_SESSION['_flash'][] = ['type' => 'success', 'msg' => 'Si un compte existe, un lien de réinitialisation a été envoyé.'];
-            $this->redirect('/login'); return;
+            $this->redirect('/login');
+            return;
         }
 
         $svc = new PasswordResetService(expiryMinutes: 60);
-        $url = $svc->createResetRequest($user);
 
-        // TODO: envoyer l'e-mail ; en dev on affiche l'URL
-        $_SESSION['_flash'][] = ['type' => 'success', 'msg' => "Lien de réinitialisation généré. (dev) {$url}"];
+        // Le service renvoie un chemin relatif (ex: /forgot-password/xxx/yyy)
+        $path = $svc->createResetRequest($user);
+
+        // On construit l'URL absolue à partir d'APP_URL
+        $baseUrl = rtrim(\env('APP_URL', 'http://localhost:8000'), '/');
+        $url     = $baseUrl . $path;
+
+        try {
+            $mailer = new Mailer();
+            $mailer->send(
+                $email,
+                'Réinitialisation de votre mot de passe',
+                'reset_password',
+                [
+                    'resetUrl' => $url,
+                    'email'    => $email,
+                ]
+            );
+            $_SESSION['_flash'][] = ['type' => 'success', 'msg' => "Un e-mail de réinitialisation vous a été envoyé."];
+        } catch (\Throwable $e) {
+            $_SESSION['_flash'][] = [
+                'type' => 'danger',
+                'msg'  => "Impossible d'envoyer l'e-mail de réinitialisation pour le moment."
+            ];
+        }
+
         $this->redirect('/login');
     }
 
@@ -60,7 +87,8 @@ final class ForgotPasswordController extends Controller
 
         if (!$user) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Lien invalide ou expiré.'];
-            $this->redirect('/login'); return;
+            $this->redirect('/login');
+            return;
         }
 
         $this->render('auth/reset_password', [
@@ -89,12 +117,14 @@ final class ForgotPasswordController extends Controller
 
         if (!$user) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Lien invalide ou expiré.'];
-            $this->redirect('/login'); return;
+            $this->redirect('/login');
+            return;
         }
 
         if ($password === '' || $password2 === '' || $password !== $password2) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => 'Les mots de passe ne correspondent pas.'];
-            $this->redirect("/forgot-password/{$selector}/{$token}"); return;
+            $this->redirect("/forgot-password/{$selector}/{$token}");
+            return;
         }
 
         // Validation back (force) via PasswordValidator
@@ -108,12 +138,14 @@ final class ForgotPasswordController extends Controller
             foreach ($pwErrors as $err) {
                 $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => $err];
             }
-            $this->redirect("/forgot-password/{$selector}/{$token}"); return;
+            $this->redirect("/forgot-password/{$selector}/{$token}");
+            return;
         }
 
         if (!$svc->updatePasswordAndClear($user, $password)) {
             $_SESSION['_flash'][] = ['type' => 'danger', 'msg' => "Impossible d'enregistrer le nouveau mot de passe."];
-            $this->redirect("/forgot-password/{$selector}/{$token}"); return;
+            $this->redirect("/forgot-password/{$selector}/{$token}");
+            return;
         }
 
         $_SESSION['_flash'][] = ['type' => 'success', 'msg' => 'Mot de passe changé avec succès.'];

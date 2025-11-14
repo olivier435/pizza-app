@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Throwable;
+use App\Service\Mailer;
 use App\Core\Controller;
 use App\Entity\Purchase;
 use App\Entity\PurchaseItem;
@@ -114,9 +115,31 @@ final class CheckoutController extends Controller
             $purchaseRepo->markPaidAndNumberAndTotal((int)$purchase->getId(), $finalNumber, $purchase->getTotalCents());
 
             $purchaseRepo->commit();
+            $purchase = $purchaseRepo->findWithItems((int)$purchase->getId());
 
             // 4) vider panier + flash
             unset($_SESSION['cart']);
+            try {
+                $mailer = new Mailer();
+                $user   = $_SESSION['user'] ?? [];
+                $fmt    = fn(int $cents) => number_format($cents / 100, 2, ',', ' ') . ' €';
+
+                $mailer->send(
+                    $user['email'] ?? 'test@example.com',
+                    'Confirmation de votre commande ' . $finalNumber,
+                    'order_confirmation',
+                    [
+                        'purchase' => $purchase,
+                        'user'     => $user,
+                        'fmt'      => $fmt,
+                    ]
+                );
+            } catch (\Throwable $th) {
+                $_SESSION['_flash'][] = [
+                    'type' => 'warning',
+                    'msg'  => "Commande OK mais e-mail non envoyé."
+                ];
+            }
             $_SESSION['flash_success'] = "Commande validée : {$finalNumber} (" .
                 number_format($grand / 100, 2, ',', ' ') . " €)";
 

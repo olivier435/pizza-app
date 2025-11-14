@@ -8,13 +8,13 @@
     </div>
     <div class="container hero-content">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="hero-text" data-aos="fade-up" data-aos-delay="100">
                     <span class="tagline">Découvrez l'excellence culinaire</span>
                     <h1 class="hero-title">Savourez chaque instant au Papacionu</h1>
                     <p class="hero-description">Laissez-vous séduire par une cuisine italienne authentique, préparée avec passion à partir des meilleurs ingrédients. Des recettes traditionnelles transmises de génération en génération aux créations culinaires innovantes, nous vous proposons une expérience gastronomique inoubliable.</p>
                     <div class="hero-actions" data-aos="fade-up" data-aos-delay="200">
-                        <a href="#" class="btn btn-primary">Réservez une table</a>
+                        <a href="/booking" class="btn btn-primary">Réservez une table</a>
                         <a href="/pizzas" class="btn btn-outline">Voir le menu</a>
                     </div>
                     <div class="hero-features" data-aos="fade-up" data-aos-delay="300">
@@ -40,49 +40,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
-                    <h3>Réservation</h3>
-                    <form action="" method="post" class="php-email-form">
-                        <div class="row gy-3">
-                            <div class="col-md-6">
-                                <input type="text" name="name" class="form-control" placeholder="Votre Nom" required="">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="email" name="email" class="form-control" placeholder="Votre email" required="">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="tel" name="phone" class="form-control" placeholder="Votre téléphone" required="">
-                            </div>
-                            <div class="col-md-6">
-                                <select name="couverts" class="form-control" required="">
-                                    <option value="">Couverts</option>
-                                    <option value="1">1 couvert</option>
-                                    <option value="2">2 couverts</option>
-                                    <option value="3">3 couverts</option>
-                                    <option value="4">4 couverts</option>
-                                    <option value="5">5+ couverts</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="date" name="date" class="form-control" required="">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="time" name="time" class="form-control" required="">
-                            </div>
-                            <div class="col-12">
-                                <textarea name="message" class="form-control" rows="3" placeholder="Demandes spéciales ou restrictions alimentaires"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <div class="loading">Chargement</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Votre demande de réservation a été envoyée. Nous vous contacterons rapidemment !</div>
-                                <button type="submit" class="btn btn-primary w-100">Réservez dès maintenant</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

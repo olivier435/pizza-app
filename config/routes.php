@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Controller\Dev\FixturesController;
-use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController, ProfileController, AccountDeleteController, SuccessController};
+use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController, ProfileController, AccountDeleteController, SuccessController, ContactController, BookingController};
 
 return [
     ['GET',  '/',            [HomeController::class, 'index']],
@@ -50,4 +50,12 @@ return [
     ['POST', '/compte/settings',  [ProfileController::class, 'updateSettings']],
     ['POST', '/compte/security',   [ProfileController::class, 'updatePassword']],
     ['POST', '/compte/delete', [AccountDeleteController::class, 'deleteAccount']],
+
+    // Contact
+    ['GET', '/contact', [ContactController::class, 'index']],
+    ['POST', '/contact', [ContactController::class, 'send']],
+
+    // Booking
+    ['GET', '/booking', [BookingController::class, 'index']],
+    ['POST', '/booking', [BookingController::class, 'send']],
 ];

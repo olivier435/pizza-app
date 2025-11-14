@@ -3,6 +3,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $isHome    = ($currentPath === '/');
 $isPizzas  = ($currentPath === '/pizzas');
 $isCart    = ($currentPath === '/panier');
+$isContact    = ($currentPath === '/contact');
+$isBooking    = ($currentPath === '/booking');
 
 $anchor = function (string $id) use ($isHome): string {
   return $isHome ? "#{$id}" : "/#{$id}";
@@ -70,9 +72,9 @@ if ($isLogged) {
           <li><a href="/" class="<?= $isHome ? 'active' : '' ?>">Accueil</a></li>
           <li><a href="<?= htmlspecialchars($anchor('about')) ?>">À propos de nous</a></li>
           <li><a href="/pizzas" class="<?= $isPizzas ? 'active' : '' ?>">Notre carte</a></li>
-          <li><a href="#">Réserver</a></li>
+          <li><a href="/booking" class="<?= $isBooking ? 'active' : '' ?>">Réserver</a></li>
           <li><a href="<?= htmlspecialchars($anchor('chefs')) ?>">Notre équipe</a></li>
-          <li><a href="<?= htmlspecialchars($anchor('contact')) ?>">Contact</a></li>
+          <li><a href="/contact" class="<?= $isContact ? 'active' : '' ?>">Contact</a></li>
           <li>
             <a href="/panier" class="header-action-btn position-relative <?= $isCart ? 'active' : '' ?>" aria-label="Voir le panier">
               <i class="bi bi-cart3"></i>
