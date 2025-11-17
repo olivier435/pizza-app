@@ -178,4 +178,28 @@ final class PurchaseRepository extends Repository
 
         return array_values($purchases);
     }
+
+    public function findAllForAdmin(): array
+    {
+        $sql = "
+            SELECT 
+                p.*, 
+                u.firstname AS customerFirstname,
+                u.lastname  AS customerLastname
+            FROM purchase p
+            JOIN user u ON u.id = p.id_user
+            ORDER BY p.createdAt DESC
+        ";
+        $req = $this->pdo->query($sql);
+        $rows = $req->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        return array_map(fn($r) => Purchase::createAndHydrate($r), $rows);
+    }
+
+    public function updateStatus(int $id, string $status): void
+    {
+        $sql = "UPDATE purchase SET status = ? WHERE id = ?";
+        $req = $this->pdo->prepare($sql);
+        $req->execute([$status, $id]);
+    }
 }

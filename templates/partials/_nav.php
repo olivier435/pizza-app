@@ -5,6 +5,7 @@ $isPizzas  = ($currentPath === '/pizzas');
 $isCart    = ($currentPath === '/panier');
 $isContact    = ($currentPath === '/contact');
 $isBooking    = ($currentPath === '/booking');
+$isAdminConnected = ($currentPath === '/admin');
 
 $anchor = function (string $id) use ($isHome): string {
   return $isHome ? "#{$id}" : "/#{$id}";
@@ -39,6 +40,7 @@ if ($isLogged) {
     'UTF-8'
   );
 }
+$isAdmin  = $isLogged && (($_SESSION['user']['role'] ?? null) === 'ADMIN');
 ?>
 <header id="header" class="header fixed-top">
   <div class="topbar d-flex align-items-center dark-background">
@@ -133,6 +135,13 @@ if ($isLogged) {
               </div>
             </div>
           </div>
+          <?php if ($isAdmin): ?>
+            <li>
+              <a href="/admin" class="header-action-btn <?= $isAdminConnected ? 'active' : '' ?>" title="Administration">
+                <i class="bi bi-speedometer2"></i>
+              </a>
+            </li>
+          <?php endif; ?>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list" aria-label="Menu"></i>
       </nav>

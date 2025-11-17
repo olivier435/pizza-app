@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -17,15 +18,42 @@ final class Pizza extends Entity
     protected bool $isActive = true;
 
     // ---------- Getters ----------
-    public function getId(): ?int { return $this->id; }
-    public function getName(): ?string { return $this->name; }
-    public function getSlug(): ?string { return $this->slug; }
-    public function getDescription(): ?string { return $this->description; }
-    public function getPhoto(): ?string { return $this->photo; }
-    public function getBasePriceCents(): int { return $this->basePriceCents; }
-    public function isRecommended(): bool { return $this->isRecommended; }
-    public function getFilter(): string { return $this->filter; }
-    public function isActive(): bool { return $this->isActive; }
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+    public function getBasePriceCents(): int
+    {
+        return $this->basePriceCents;
+    }
+    public function isRecommended(): bool
+    {
+        return $this->isRecommended;
+    }
+    public function getFilter(): string
+    {
+        return $this->filter;
+    }
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
 
     // ---------- Setters (avec cast robustes) ----------
     public function setId(?int $id): self
@@ -34,9 +62,12 @@ final class Pizza extends Entity
         return $this;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): self
     {
-        $this->name = $name;
+        // Trim + casse type "titre" (Margherita, Campione Del Mondo)
+        $normalized = mb_convert_case(trim($name), MB_CASE_TITLE, 'UTF-8');
+        $this->name = $normalized;
+
         return $this;
     }
 
@@ -74,7 +105,7 @@ final class Pizza extends Entity
     public function setFilter(string $filter): self
     {
         // sécurité légère : normalise sur nos 3 valeurs connues
-        $allowed = ['filter-classic','filter-vegetarian','filter-special'];
+        $allowed = ['filter-classic', 'filter-vegetarian', 'filter-special'];
         $this->filter = in_array($filter, $allowed, true) ? $filter : 'filter-classic';
         return $this;
     }

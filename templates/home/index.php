@@ -1,4 +1,3 @@
-<?php include __DIR__ . '/../layout/_flash.php'; ?>
 <section id="home" class="hero section dark-background">
     <div class="hero-background">
         <video autoplay="" muted="" loop="" playsinline="">
@@ -9,6 +8,7 @@
     <div class="container hero-content">
         <div class="row">
             <div class="col-lg-12">
+                <?php include __DIR__ . '/../layout/_flash.php'; ?>
                 <div class="hero-text" data-aos="fade-up" data-aos-delay="100">
                     <span class="tagline">Découvrez l'excellence culinaire</span>
                     <h1 class="hero-title">Savourez chaque instant au Papacionu</h1>

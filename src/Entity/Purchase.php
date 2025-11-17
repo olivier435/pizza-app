@@ -14,6 +14,8 @@ final class Purchase extends Entity
     private string $status = 'PENDING'; // texte libre
     private int $totalCents = 0;
     private int $userId;
+    private ?string $customerFirstname = null;
+    private ?string $customerLastname = null;
 
     /** @var PurchaseItem[] */
     private array $items = [];
@@ -49,7 +51,7 @@ final class Purchase extends Entity
     {
         return $this->createdAt;
     }
-    
+
     public function setCreatedAt(\DateTimeImmutable|string $d): void
     {
         if (is_string($d)) {
@@ -103,5 +105,30 @@ final class Purchase extends Entity
             $sum += $it->getLineTotalCents();
         }
         $this->totalCents = $sum;
+    }
+
+    public function getCustomerFirstname(): ?string
+    {
+        return $this->customerFirstname;
+    }
+    
+    public function setCustomerFirstname(?string $v): void
+    {
+        $this->customerFirstname = $v;
+    }
+
+    public function getCustomerLastname(): ?string
+    {
+        return $this->customerLastname;
+    }
+
+    public function setCustomerLastname(?string $v): void
+    {
+        $this->customerLastname = $v;
+    }
+
+    public function getCustomerFullname(): string
+    {
+        return trim(($this->customerFirstname ?? '') . ' ' . ($this->customerLastname ?? ''));
     }
 }

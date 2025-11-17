@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Controller\Admin\{AdminController, AdminIngredientController, AdminIngredientPostController, AdminPizzaController, AdminPizzaPostController, AdminPurchaseController, AdminPurchasePostController};
 use App\Controller\Dev\FixturesController;
 use App\Controller\{HomeController, PizzaController, CartController, CheckoutController, AuthController, ForgotPasswordController, ProfileController, AccountDeleteController, SuccessController, ContactController, BookingController};
 
@@ -58,4 +59,27 @@ return [
     // Booking
     ['GET', '/booking', [BookingController::class, 'index']],
     ['POST', '/booking', [BookingController::class, 'send']],
+
+    // Admin
+    ['GET', '/admin', [AdminController::class, 'index']],
+
+    // Ingrédients admin
+    ['GET',  '/admin/ingredients',        [AdminIngredientController::class, 'index']],
+    ['GET',  '/admin/ingredients/new',    [AdminIngredientController::class, 'new']],
+    ['GET',  '/admin/ingredients/edit',   [AdminIngredientController::class, 'edit']],   // ?id=123
+    ['POST', '/admin/ingredients/new',     [AdminIngredientPostController::class, 'create']],
+    ['POST', '/admin/ingredients/edit',    [AdminIngredientPostController::class, 'update']],
+    ['POST', '/admin/ingredients/delete',  [AdminIngredientPostController::class, 'delete']],
+
+    // Pizzas admin
+    ['GET',  '/admin/pizzas',           [AdminPizzaController::class, 'index']],
+    ['GET',  '/admin/pizzas/new',       [AdminPizzaController::class, 'new']],
+    ['GET',  '/admin/pizzas/{id}/edit', [AdminPizzaController::class, 'edit']],
+    ['POST', '/admin/pizzas/new',       [AdminPizzaPostController::class, 'create']],
+    ['POST', '/admin/pizzas/{id}/edit', [AdminPizzaPostController::class, 'update']],
+    ['POST', '/admin/pizzas/{id}/delete', [AdminPizzaPostController::class, 'delete']],
+
+    // Purchases admin
+    ['GET',  '/admin/purchases',             [AdminPurchaseController::class, 'index']],
+    ['POST', '/admin/purchases/{id}/toggle', [AdminPurchasePostController::class, 'toggleStatus']],
 ];
